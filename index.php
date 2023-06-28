@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Quản lý câu hỏi</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -21,10 +22,12 @@
                     <th scope="col">STT</th>
                     <th scope="col">Câu hỏi</th>
                     <th scope="col">Chức năng</th>
-                    <th scope="col">Handle</th>
                 </tr>
             </thead>
             <tbody>
+                <div class="col-sm-12 text-right">
+                    <button id="btnquestion" class="btn btn-success">+</button>
+                </div>
                 <?php include('connect.php') ?>
                 <?php
                 $sql = $conn->prepare("SELECT * FROM tbl_question");
@@ -32,13 +35,13 @@
                 $index = 1;
                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
                     echo '<tr>';
-                    echo '<th scope="row">' . $index++ . '</th>';
-                    echo '<td>' . $result['question'] . '</td>';
-                    echo '<td>';
-                    echo '<button type="">Xem</button>&nbsp';
-                    echo '<button type="">Sửa</button>&nbsp';
-                    echo '<button type="">Xóa</button>';
-                    echo '</td>';
+                    echo    '<th scope="row">' . ($index++) . '</th>';
+                    echo    '<td class="text-primary">' . $result['question'] . '</td>';
+                    echo    '<td>';
+                    echo        '<button type="" class="btn btn-xs btn-info">Xem</button>&nbsp';
+                    echo        '<button type="" class="btn btn-xs btn-warning">Sửa</button>&nbsp';
+                    echo        '<button type="" class="btn btn-xs btn-danger">Xóa</button>';
+                    echo    '</td>';
                     echo '</tr>';
                 }
                 ?>
@@ -49,3 +52,9 @@
 </body>
 
 </html>
+<?php include('mdlQuestion.php') ?>
+<script type="text/javascript">
+    $('#btnquestion').click(function(){
+        $('#modalQuestion').modal();
+    });
+</script>
