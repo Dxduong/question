@@ -34,13 +34,13 @@
                 $sql->execute();
                 $index = 1;
                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<tr>';
+                    echo '<tr id =' . $result['id'] . '>';
                     echo    '<th scope="row">' . ($index++) . '</th>';
                     echo    '<td class="text-primary">' . $result['question'] . '</td>';
                     echo    '<td>';
-                    echo        '<button type="" class="btn btn-xs btn-info">Xem</button>&nbsp';
-                    echo        '<button type="" class="btn btn-xs btn-warning">Sửa</button>&nbsp';
-                    echo        '<button type="" class="btn btn-xs btn-danger">Xóa</button>';
+                    echo        '<input type="button" class="btn btn-xs btn-info" value="Xem" name="view">&nbsp';
+                    echo        '<input type="button" class="btn btn-xs btn-warning" value="Sửa" name="update">&nbsp';
+                    echo        '<input type="button" class="btn btn-xs btn-danger" value="Xóa" name="delete">';
                     echo    '</td>';
                     echo '</tr>';
                 }
@@ -54,7 +54,21 @@
 </html>
 <?php include('mdlQuestion.php') ?>
 <script type="text/javascript">
-    $('#btnquestion').click(function(){
+    $('#btnquestion').click(function() {
         $('#modalQuestion').modal();
+    });
+    $('input[name=view]').click(function() {
+        var bid = this.id;
+        var trid = $(this).closest('tr').attr('id');
+        $.ajax({
+            url:'detail.php',
+            type:'get',
+            data:{
+                id:trid
+            },
+            success:function(data){
+                console.log(data);
+            }
+        })
     });
 </script>
