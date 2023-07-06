@@ -68,6 +68,7 @@
             },
             success:function(data){
                 console.log(data);
+                $('#modalQuestion').modal();
             }
         })
     });
